@@ -1,0 +1,82 @@
+Data Mining Notes
+
+Data Mining in Practice by Junling Hu
+
+- Pattern mining
+- Machine learning
+- Stream mining
+- Recommender system
+- Graph mining (e.g., internet)
+- Unstructured data
+    - Text
+    - Audio
+    - Image and Video
+
+- 
+- Product Assortment / Basket Analysis / Cross-selling
+    - Beer and Pampers
+    - Home Depot acquired data mining company for help with forecasting
+- Click behavior
+- Machine breakdown 
+    - GE turbines
+    - car insurance companies
+- Product recommender
+    - count frequency of co-occurence of products at Amazon
+    - efficient algorithm is difficult when you extrapolate data 
+- Customer churn
+    - Identify customers likely to leave
+    - Offer customer incentive to retain consumer (e.g., Tesco vs. Walmart customer centricity)
+- Customer segmentation
+    - Obama campaign to segment customers and market accordingly for fundraising
+- Fraud Detection
+- IT error log
+- Customer Credit Risk Evaluation
+    - Use neural networks
+- Post Office - handwriting identification
+
+
+- Neural networks
+  - Processed one at a time
+
+
+- Support Vector Machines
+    - Spam filters
+
+- Logistic Regression
+    - can be parallelized
+
+- Click prediction
+    - Probability of clicking content or add (logistic regression?)
+
+- Semi-supervised learning
+    -Siri speech dialog system
+
+- Unsupervised learning
+    - Clustering
+        - K-means clusters
+        - Density based
+        - Hierarchical
+
+- Clustering applications
+    - malware detection
+    - document clustering for topic detection (google news)
+
+- Recommendation Engines
+    - Rating prediction - based on user's history, predict ratings for other products and then recommend top new products
+    - Explicit vs. Implicit feedback (substitute page views, frequency, time of day during visit, length of visit, clicks, etc...)
+    - Collaborative filtering
+        - User-User similarity - Not very scalable for sites like Amazon that have too many users (pairwise comparison for 20M users would take a day of computing)
+        - Item-Item similarity is replacing user-user similarity
+        - SVD - Singular value Decomposition (reduce number of factors to simplify at small cost in accuarcy)
+            - Summarize all factors in smaller number of latent factors
+        - Ranking-based model - LinkedIn
+
+
+******Stopped at 1:05:27 - "Graphs in our life"
+http://eda.mediasite.com/Mediasite/Play/233f292190504bcdbc1718d34e2e8cc81d
+
+
+
+
+
+

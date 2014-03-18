@@ -1,0 +1,713 @@
+R Notes
+
+- vectors can only have items from the same class (e.g., character, integer, logic, numeric complex)
+- list can hold items from different classes (has two indexes because each item in list could be a vector)
+
+Data Types
+- L suffix for integers (1 is numeric vs. 1L is integer)
+- Inf is infinity
+- NaN is undefined number
+- symbol for assigning values "<-"  (e.g., x <- 1 assigns 1 to variable x)
+- # is comments character (anything to right is ignored)
+- drop = false to return matrix from subset, e.g., x[1, , drop = FALSE]
+- double bracket can be used with variables but $ needs literal value and not variable
+- double bracket and $ will do partial match, e.g., x$a would work fine if list name was aardvark, x[["a", exact = FALSE]
+- complete.cases() - e.g., x <- c(1,2,NA), y<-("a", "b", NA), good <- complete.cases(x,y), x[good] and y[good] 
+- calculating data size = rows x columns x 8 bytes for numeric / 2^20 to calc MB (note: multiple by 2 to account for overhead of R software)
+- wc function in unix to count rows in unix?
+- connections - file, gzfile, bzfile, url (includes gzip and bzip2 files and urls)
+- order of loading packages is important for prioritizing functions, global is first, base is last, each loaded package becomes 2nd and pushes everything back one space in priority list
+- nested functions example make.power <- function(n) {pow <- function(x) {x^n}} 
+- nested functions cube <- make.power(3)  #cube is now a function that raises its input to power of 3
+- clear console - control-l
+- interrupt or break process - esc (not control-c)
+- print select columns from data frame - subset(dataframe, select=c(2,11)) #select = columns to display
+- rm(list=ls()) #cleans workspace/
+
+
+Importing Data
+- read.table() or read.csv() # reading tabular data, table has default separator as space and csv has comma
+     - make sure computer has enough physical memory
+     - file 
+     - header - does data have header in first line
+     - sep - is data separated by commas or others
+     - colClasses - indicates classes of each column
+     - nrows - number of rows in dataset
+     - comment.char - character string indicating comment character
+     - skip - # of lines to skip from beginning
+     - **stringsAsFactors - should character variables be coded as factors
+     - data <- read.table("foo.txt")
+     - set comment.char = "" to save memory
+     - make sure there is enough ram for dataset
+     - setting colClasses will improve processing time
+     - use nrows to grab data sample (e.g., set nrows = 100)
+- source() #imports files with code filename.R
+- dir() # lists files in current working directory
+- getwd() # get's working directory (use misc from toolbar to change current working directory)
+- setwd() # change working directory (TIP: use relative paths "./data" would change directory to data folder within current wd "../" goes to parent
+- source/dump
+- dput/dget
+- read.csv(file.choose()) #brings up window for selecting file but not good for documentation
+- ?connections has lots of info interacting directly with files
+- Example for reading files from web/folder
+     - con <- file("path/file.csv","r") #r is for reading file
+     - con <- url("url.org", "r") 
+     - variable <- readLines(con)
+     - close(con) #remember to close the connections 
+- download.file() #useful for getting data from internet / method="curl" for macs accessing https
+- example: download.file("https://...", destfile="./data/name.csv", method="curl")
+- download files instead of making live connections for faster processing
+- capture date for documentation e.g., DownloadDate <- date()
+- load("filename.rda") #load objects from rda file into current environment
+
+Data Loading - Recommended Packages from Jeff Leek
+- httr for working with http connections
+- RMySQL for interfacing with MySQL
+- bigmemory for handling data larger than RAM
+- RHadoop for interfacing R with Hadoop
+- foreign for getting data into R from SAS, SPSS, Octave
+- xlsx package for reading Excel files
+- RJSONIO package for reading JSON files
+
+XML Package
+- htmlTreeParse()
+- Example
+    - html3 <- htmlTreeParse("[name of URL]", useInternalNodes=T)
+    - xpathSapply(html3, "//title", xmlValue)
+
+Writing Data
+- clean data by removing first column: tmpData <- data[,-1]
+- write.table() #convert data frame into file (like a csv)
+- save() is used to save multiple r objects into a .rda file, inputs are objects and file name
+- save.image() saves everything in your working directory
+
+Data Investigation
+- start with dim(), names(), nrow(), ncol()
+- next quantile(), summary()
+- determine data classes for Data Frame
+    - sapply(eData[1,],class) #creates list of variable types in a dataframe
+- unique(), length(), table()
+- any() #logical function, example any(eData$Lat[1:10] > 40)
+- all() #similar to any, logical function to determine if all variable meet conditions
+- rowSums(), rowMeans(), colSums(), colMeans() #na.rm=TRUE if you want to omit NA values
+
+
+Data Cleaning
+- how to strip out na values:  create separate variable bad <- is.na(x), x[!bad]
+- subset(IdahoHousing$VAL, IdahoHousing$BDS==3 & IdahoHousing$RMS==4, c("BDS","RMS") - filters data set with multiple conditions
+- use | for or in subset
+- use sum or table to count instances - sum(is.na(eData)) 
+- goal is tidy data
+- munging operations (partial list)
+    - fix variable names
+    - create new variables
+    - merge data sets
+    - reshape data sets
+    - deal with missing data
+    - take transforms of variables
+    - check on and remove inconsistent values
+    - record your steps using code
+- remove specific data rows based on conditions #note you MUST use !=
+    - hunger <- hunger[hunger$Sex!="Both sexes",]
+- remove specific data columns
+    - dataFrame[,!names(dataFrame) %in% c("column names to delete","y")]
+- fixing variable names 
+    - consistent cases - use tolower(), toupper() #example tolower(names(eData))
+    - remove . from variable named location.1
+        - splitNames <- strsplit(names(eData),"\\.")
+        - firstElement <- function(x){x[1]}
+        - sapply(splitNames,firstElement)
+    - remove underscores
+        - sub("_","",names(eData)) #only removes first _ found
+        - gsub #replaces all _
+- convert quantitative variables into factors
+    - timeRanges <- cut(reviews$time_left, seq(0,3600, by=600))
+    - converts quantitative data into factors (then you can use table)
+    - cut2(reviews$time_left, g=6) #automatically divides data set into quantiles
+- add new variable to a dataframe
+    - reviews$timeRanges <- timeRanges
+- merge data sets
+    - mergedData <- merge(reviews, solutions, all=TRUE) #all=TRUE will include NAs when variable names aren't found in both sets
+    - mergedData <- merge(reviews, solutions, by.x="solution_id", by.y="id",all=TRUE) #combines solution_id with id in merged data set
+- sorting data
+    - mergedData[sort(mergedData)] #sort will return the indices of the values and not the actual values
+    - mergedData[order(mergedData$id),] #for dataframes, make sure you have the comma
+    - mergedData[order(mergedData$id, mergedData$reviewer) #reordering by multiple variables
+- reshaping data
+    - misShaped <- as.data.frame(matrix(c(NA,5,1,4,2,3), byrow=TRUE,nrow=3))
+    - names(misShaped)<- c("treatmentA","treatmentB")
+    - misShaped$people <- c("John","Jane","Mary")
+    - use reshape2 package's melt function
+    - melt(misShaped, id.vars="people",variable.name="treatment", value.name="value")
+
+Open Data Sets
+- data.gov (US public data set) exists for other countries
+- gapminder (global data on health etc...)
+- opengovernmentdata.org
+
+APIs
+- twitter and twitteR package
+
+
+Vectors, Tables, Data Frames
+- vector()
+- attributes()
+- c() # concatenates to create a vector, if multiple classes, it will default to lower common denominator / coercion to single class
+- class() # returns class of variable
+- as.character() #coercion to specific class.  also can be as.integer, etc...
+- dim() #returns dimensions of vector (used for matrices)
+- cbind() or rbind() #creates matrix inputting data by column-cbind or row-rbind
+- factor() # creates vector of categorical labels, levels attribute is optional e.g., x <- factor(c("yes", "yes", "no"), levels = c("yes","no")
+- table() -  like pivot table, creates table of each combination of variables, you can designate two variables, only works with factors
+- table() NOTE - table will omit NA values by default unless you add useNA="ifany"
+- unclass()
+- is.na() or is.nan() #nan is a missing number, but na is not available, nan is classified as na but na is not classified as nan
+- data.matrix() #coerces table into a matrix
+- data.frame() 
+- create a sequence: "x <- 1:20" creates a vector with 20 elements from 1 to 20
+- m <- matrix(nrow = 2, ncol =3) # matrices must all be same class
+- dim(m) <- c(2,5) #changes dimensions of m to 2 rows and 5 columns
+- names() #lists names of columns for data frame
+- dimnames()
+- factors are used to represent categorical data e.g., male and female
+- data frames are used to store tabular data, it's a special type of list, has attribute called row.names
+- bracket operators single [ is same class, double [[ elements of a list or data frame, $ is used to extract by name
+- x[x>"a"] returns values greater than a but u <- x >"a" will return True and False values for u, x[u] is same as first expression
+- indices can be left out x[1,] returns all row 1 values
+- level(dataFrame$factorVariable) #returns all levels of factors
+
+Functions
+- readLines() #for reading lines of a text file
+- rep(x,y) #repeats value x for count of y times
+- %*% is for matrix multiplication and instead of element wise multiplication 
+- ls() # list objects - e.g., functions
+- rm() # remove objects
+- str() - provides data summary
+- summary()
+- rnorm([# of elements],[mean],[std dev]) #creates data set based on normal distribution
+- gl() #generate list
+- library() #loads packages into R e.g., library("stats4") - loads stats4 package, library(h=stats4) - loads 
+- head() #displays headers and data sample
+- split() #splits data e.g., split(airquality, airquality$month) splits data by month
+- rm() #removes vectors, etc...  use comma to separate multiple items
+- if([condition]) {action} else if {action} else (double & to have multiple conditions - x > 3 && x < 10
+- for, while
+- repeat # execute an infinite loop
+- break # break the execution of a loop
+- next # skip an iteration of a loop
+- return # exit a function
+- seq_along() # takes vector and creates a sequence for number of entities in vector
+- seq_len() # returns sequence based on length of value inputed (e.g., if value is 4, a vector 1:4 will be created)
+seq
+- f <- function([arguments]) {do something}
+- using "..." as wildcard for n number of items in a function
+- cat (..., file = "", sep = " ", fill = FALSE, labels = NULL, append = FALSE)
+- environment() #returns list of items in an environment
+- get("n", environment(cube)) # returns value of n in the cube environment (cube is a function)
+- lapply used to apply functions to lists
+- sapply - same as lapply but it simplifies lists into vectors when possible 
+- tapply for table and mapply to apply multiple times (instead of using a loop)
+- example: use mean(x) on vectors but use sapply(x,mean) on lists 
+- apply is same as sapply but for margins of matrices (e.g., columns or rows) not as fast as specialty functions like rowSums or colMeans
+- rowSums, rowMeans, colSums, colMeans
+- gl(x,y) # generate list of x factors and y items
+- interaction()
+- invisible()
+- traceback(), debug, browser, trace, recover
+- debug #enter "n" to go to next step
+- options(error = recover) #global setting that automatically recovers when there is an error
+- nchar() #length of string
+- expression() #used to write mathematical notation like sum sigma, ?plotmath is good reference
+- substitute() #used to insert calculations into labels, e.g., use it to calculate mean of data set and use the mean as axis label
+- colnames() #lists column names for a data frame
+- nrow(dataframe) #counts rows for data frame
+- ncol(dataframe) #counts columns for data frame
+
+String Functions
+- paste(....,sep = " ", collapse = NULL) #same as concatenate in Excel
+- paste0() #paste with sep = ""
+
+
+Literate Statistical Programming with knitr
+- reproducible research - analytic data, analytic code, documentation of code and data, standard means of distribution
+- literate (statistical) programming - documentation language and computer readable language
+- sweave - uses LaTeX and R, but not able to use different programming languates
+- knitr is an alternative to sweave that can use multiple programming and documentation languates
+- knitr is built into Rstudio, an R package written by Yihui Xie
+- knitr supporst RMarkdown, LaTeX and HTML as documentation languages
+- knitr - cache=TRUE option can store results of previous computations which will save time when updating knitr files
+
+
+
+
+Distributions
+- rnorm(n, mean, sd) # generate random Normal variates, n is number of variates requested
+- r for random generation of variates
+- d for density
+- p for cumulative distribution
+- q or quantile function
+- rpois #generate random Poisson variates
+- ppois(q, lambda, lower.tail=TRUE) probability that a variate is less a value q with 
+mean lambda
+- set.seed(1) #ensures random numbers are reproducible, seed is index for "random numbers" 
+generated
+- rbinom #creates binomial distribution (values of either 0 or 1)
+- sample(vector, number of samples, replace = FALSE) #randomly selects samples
+
+
+Base Graphics 
+- plot(x,y)
+- hist(x)
+- par() #sets specific global graphics parameters that affect all plots, but can be 
+overridden as arguments to specific plotting functions
+    - pch #plotting symbol (default is open circle, 20 is solid circle)
+    - lty #line type
+    - lwd #line width
+    - col #plotting color
+    - las #orientation of the axis labels
+    - bg #background color
+    - mar #margin size (4 values, start at bottom and goes clockwise)
+    - oma #outer margin size
+    - mfrow #number of plots per row, column (multiple plots are organized row-wise)
+    - mfcol #number of plots per row, column (multiple plots are organize column-wise)
+- lines # add lines to a plot
+- points # add points to a plot
+- text(x,y,text) #add text labels to a plot using x,y coordinates
+- title(text) #add notations to x,y axis labels, title, subtitle, outer margin
+- mtext #add text to margins
+- axis #add axis ticks/labels
+- legend("topleft",legend = "Data", pch=20) #creates legend in top left corner with title Data and solid circle
+- abline# fit<-lm(y~x) where x,y are 100 rnorm vectors, abline(fit)
+- points(x[g == "Male"],y[g=="Male"],col = "green") #g <- gl(2,50,labels = c("Male","Female")  
+- devices
+    - pdf
+    - png (good for line drawings but doesn't resize well)
+    - jpg (good photos, not great for line drawings, doesn't resize well)
+    - bitmap
+    - bmp #native Windows bitmapped format
+- copying plots (not an exact process)
+    - dev.copy #copy a plot from one device to another
+    - dev.copy2pdf #copies to pdf
+    - dev.list() #show the list of open graphics devices
+    - dev.next #switch control to the next graphics device on the list
+    - dev.set #set control to a specific graphics device
+    - dev.off #close the current graphics device
+
+Lattice Plots
+- xyplot #scatterplots
+- bwplot #box and whiskers
+- histogram
+- stripplot #like a box plot but with actual points
+- dotplot #plot dots on "violin strings"
+- splom #scatterplot matrix, like pairs in base graphics
+- levelplot, contourplot #for plotting image data
+- lattice functions
+    - y ~ x | f * g #on left of ~ is the y variable and right is x variable
+    - after | are the conditioning variables (optional) and * indicates interaction
+    - return an object of class trellis
+- xyplot(ozone ~ radiation | temp.cut, data = environmental, layout=(c(1,4)),as.table = TRUE)
+
+
+GGPLOT2
+- implementation of the Grammar of Graphics by Leland Wilkinson
+- available from CRAN via install.packages()
+- ggplot2.org has detailed documentation
+- make sure you use good labels for factor variables
+- qplot hides lots of functions that are available in ggplot
+- components of ggplot2
+    - data frame
+    - aesthetic mappings - color, size
+    - geoms - geometric objects like points, lines, shapes
+    - facets for conditional plots
+    - stats - statistical transformations like binning, quantiles, smoothing
+    - scales - what scale an aesthetic maps uses like color for males and females
+    - coordinate system
+- use aes() function when using variables for formats 
+- when limiting axis you need to use coord_cartesian or the outliers will get removed from graph
+- cut() function for taking continuous variable into a categorical
+- example for making tertiles
+    ## Calculate the deciles of the data
+    - cutpoints <- quantile(maacs$logno2_new, seq(0,1, length =4), na.rm = TRUE) 
+    ## Cut the data at the deciles and create a new factor variable
+    - maacs$no2dec <- cut(maacs$logno2_new, cutpoints)
+    ## See the levels of the newly created factor variable
+    - levels(maacs$no2dec)
+- complex example
+    ## Setup ggplot with data frame
+    - ggplot(maacs, aes(logpm25, NocturnalSympt))
+    ## Add layers
+    - g + geom_point(alpha = 1/3)
+        + facet_wrap(bmicat ~ no2dec, nrow = 2, ncol =4)
+        + geom_smooth(method="lm", se=FALSE, col="steelblue")
+        + theme_bw(base_family = "Avenir", base_size = 10)
+        + labs(x = expression("log " * PM[2.5])
+        + labs(y = "Nocturnal Symptoms")
+        + labs(title = "MAACS Cohort")   
+
+grDevices Package
+- colorRamp (c("red","blue") # creates function that takes input between 0 and 1 and converts it to 1x3 matrix with 0-255 values for RGB
+- colorRampPalette(c("red","yellow") # creates function that takes integer and returns a character in hexadecimal for RGB
+
+RColorBrewer Package
+- 3 types of palettes (sequential, diverging, qualitative)
+- Can be used in conjunction with color ramp
+- brewer.pal(3, "BuGn") # number of colors and color palette id (look up in help) are inputs and hexadecimal RGB is returned
+- example of using brewer.pal with colorPalete - cols <- brewer.pal(3,"BuGn") ; pal <- colorRampPalette(cols) ; image(volcano, col = pal(20)
+
+Other Color Techniques
+- smoothScatter(x,y) # x and y are multiple value vectors / creates 2D histogram and shades in higher density regions (instead of lots of dots on top of each other
+- rgb() #takes 3 rgb integers between 0 and 1 and converts it to hexadecimal; optional alpha can be used to change transparency, good for high density scatterplots
+
+Dates and Times
+- Dates are represented by date class #application is as.date()
+- Times are presented by the POSIXct (as data frame) or POSIXlt class (as list)
+- They are stored as number of day or seconds since 1970-01-01
+- unclass() will convert date to number
+- weekdays() # gives day of week
+- months() # gives month name
+- quarters() # gives Q1 etc...
+- POSIXlt - has class names for day, month, hour, sec, etc...
+- as.POSIXlt to convert between formats
+- strptime(datestring, "%d %b %Y %H:%M:%S" #converts date based on format you set (use help to get key for symbols) and converts to POSIXlt
+- be careful not to mix classes for dates and times because they are incompatible
+- operations can keep track of leap years, daylight savings and time zones
+- plots will recognize date and time classes
+
+Regular Expressions
+- use ^ to limit search to only beginnings of lines (e.g., ^Title)
+- use $ to limit search to only ends of a line (e.g. morning$)
+- character classes [Bb][Us][Ss][Hh] will search for any combination of upper or lower case versions of Bush
+- [0-9] [a-zA-Z] will work for ranges
+- ^ in a character class[^] for example[^.?]$ will look
+- . works as a wild card for search (nothing is an expression so 9.11 would match to 911 and 9a11
+- | can be used for OR # ^[Gg]ood|[Bb]ad is different than ^([Gg]ood|[Bb]ad)
+- ? means it's optional e.g., [Gg]eorge( [Ww]\.)? [Bb]ush
+- use \ before a meta-character if you want to literally mean it e.g, \. would return "."
+- * repeated characters and includes nothing as a character so (.*) would match anything an
+- + means it can be repeated but must contain at least one
+- {} are used as interval quantifiers [Bb]ush( +[^ ]+ +{1,5} debate #bush with 1-5 words followed by debate
+- {1} exact match of once, {2,4} two to four, {4,} at least 4 times
+- \1 repeat of last item in parentheses # +([a-zA-Z]+) +\1 + any word repeated
+- the * is greedy so it always matches the longest possible string that satisfies the regular expression
+- ^s(.*?)s$ #? is used to make * not greedy
+
+
+Regular Expressions in R
+- grep, grepl #search for matches of a regular expression/pattern in a character vector and return character indices, strings or TRUE / FALSE
+- grep(searchterm, data, value=FALSE #if value is TRUE it will return values instead of indices
+- grepl(searchterm, data) #returns a vector of TRUE FALSE values
+- regexpr, gregexpr #returns indices of string where the match begins and the length of match
+- regexpr only returns first value and gregexpr returns all values
+- sub, gsub #search for a character vector and replaces the match with another string
+- gsub example - gsub("<dd>[Ff]ound on |</dd>","",dataset) removes beginning and end text from homicides data substring
+- regmatches(dataset, r) # r is the output of a regexpr function ; result is a vector of the strings that matched the regexpr criteria
+- regexec is similar to regexpr, but it will also return additional character positions and lengths for any characters in parentheses that are in the search term for regexec
+- setdiff(i,j) #compares two vectors and returns items in vector i that aren't in vector j
+- example:
+    r <- regexec("<dd>[F|f]ound on (.*?)</dd>", homicides)
+    m <- regmatches(homicides, r)
+    dates <- sapply(m, function(x) x[2])
+    dates <- as.Date(dates, "%B %d, %Y")
+
+Object Oriented Programming in R
+- setClass() #creates classes
+- new() creates objects 
+- setMethod
+- setGeneric
+
+
+Packages
+- graphics (plot, hist, boxplot)
+- lattice (xyploy, bwplot, levelplot)
+- base and lattice can't be mixed
+
+
+
+Introduction to Packages
+- Recommended packages - kernsmooth, mass, matrix, boot, class, cluster, codetools, foreign, mgcv, nlme, nnet, rpart, spatial, survival
+- crantastic.org
+- wwww.r-bloggers.com
+- stackoverflow.com/questions/tagged/r
+- install, update, load, require
+- getting help (in order) - package maintainer, package author, know package users, r-help, stackoverflow
+- build your own package - official R - writing R extensions, Hadley's Advanced R Programming (better option)
+- jporzak@gmail.com (works at minted.com)
+- help resources
+   - markmail.org 
+   - spencer grave's findFUND (searches across all R packages for key words)
+    *****- rdocumentation package to search across
+
+
+
+randomForest Package
+- an extension of single decision tree methods like CART & CHAID
+- run unsupervised to discover clusters (good for market segmentation)
+- sports club example available online from Jim Porzak
+- detailed talke on example data set at ds4ci.org/archives/
+
+
+
+Reshape Package
+- data reshaping (kind of like pivot tables)
+- melt() -> long format
+- cast() to reshape data
+
+
+Arules Package
+- sequential pattern mining
+- market basket analysis
+- customer id, timestamp, transaction (data input)
+
+
+Survival Package
+- Harrison Dekker
+- Used it to analyze employment records 
+- Kaplan-Meier survival analysis
+- Estimate the time-to-event (e.g., when an employee might leave)
+- Similar technique used for marketing/customer churn in subscription businesses
+- Often used to compare survival outcomes of two treatment groups
+
+
+Web Technologies (group of packages)
+- grab data from web
+- (httr or ROAuth) + RCurl + RJSONIO = access to data from all over the web
+- ropensci.org - 50+ packages data, full-text, hybrid tools
+- github.com/ropesci/webservices
+- cran.at.r-project.org/web/views/webtechnologies.html
+
+
+Use SQL inside R - sqldf Package
+- Allan Miller, Quri.com, UCB Extension
+- built on SQLite
+- You can designate database engine (e.g., postgres)
+- Leverages computing power of database engine
+- Be careful if table names are in R session and outside database
+- Use quotes of variable names with periods since SQL handles periods differently than R
+
+
+Web Browser Data Visualization - googlevis
+- d3js.org - Data Driven Documents
+- Google Chart Tools - javascript library
+- googleVis package for R
+- converts data to JSON and generates JS/HTML/XML page
+- must be connected to internet because it uses the google api
+- data has to be formatted very specifically for package (used reshape)
+- rCharts (not on CRAN yet, but on github) is similar to googleVis but isn't limited to Google API
+
+
+Exploratory graphs
+- bar, box, histogram
+- density plot #covert data using density function and then plot
+- parameters
+    - cex magnifies or shrinks dots on plot e.g., cex=0.5 (can be used with variables)
+    - col=data$integer #change color of scatter plots, only works for integer values
+- smoothscatter (scatter plot converted into color shading
+- abline(slope, intercept)
+- headmap
+- geomapping (load maps package)
+- R omits NA values in plots
+- R graph gallery (resource)
+- vischeck (website to see what graphs will look like to colorblind people)
+- create pdf
+    - pdf(file="filename.pdf", height=4, width=8) #height and width in inches
+    - enter code for graph
+    - dev.off() #end pdf
+- png(file, height, width) #height and width in pixels
+- dev.copy2pdf(file="filename") #takes current graph and makes it into pdf
+    
+
+Clustering
+- Euclidian distance = sqrt(a^2 + b^2 +c^2 +...)
+- Manhattan distance = abs(x2 - x1) + abs (y2 - y1) + ....
+- Hierarchical clustering
+    - x and y are vectors
+    - dataFrame <- data.frame(x=x, y=y)
+    - distxy <- dist(dataFrame)
+    - hClustering <- hclust(distxy)
+    - plot(hClustering)
+- myplclust() #load this function (allows coloring and numbering tree)
+- k means clusters
+    - dataFrame <- data.frame(x,y)
+    - kmeansObj <- kmeans(dataFrame,centers=3)
+    - kmeansObj$cluster #returns vector with cluster assignments for each data point
+    - note: the kmeansObj has lots of factors #you can check with names(kmeansObj)
+    
+Principal Components Analysis and Singular Value Decomposition
+- SVD: x = UD(V') #U is left singular vector, D are singular values, V are right sing vector
+    - dataMatrix is 40 x 10 matrix with rnorm values
+    - hh <- hclust(dist(dataMatrix))
+    - dataMatrixOrdered <- dataMatrix[hh$order,]
+    - svd1 <- svd(scale(dataMatrixOrdered))
+    - par(mfrow=c(1,3))
+    - image(t(dataMatrixOrdered))[,nrow(dataMatrixOrdered):1])
+    - plot(svd1$u[,1],40:1,xlab="Row",ylab="First left singular vector",pch=19)
+    - plot(svd1$v[,1],xlab="Column",ylab="First right singular vector",pch=19)
+    - see slides
+    
+Regression
+- jitter() - adds random noise to data points #helps show density of data points when values are discrete
+- jitter example: plot(jitter(galton$parent,factor=2),jitter(galton$child,factor=2),pch=19,col="blue")
+- add vertical line to histogram: lines(rep(meanChild,100),seq(0,150,length=100),col="red",lwd=5) #line covers values from 0 to 150
+- add horizontal line to xy plot: lines(seq(64,66,length=100),rep(mean(near65$child),100),col="red",lwd=4) 
+- make points near value 65 red
+    - near65 <- galton[abs(galton$parent - 65)<1, ]
+    - points(near65$parent,near65$child,pch=19,col="red")
+- plot fitted line example:
+    - lm1 <- lm(galton$child ~ galton$parent) #variable order is outcome(y-values) ~ input(x-values)
+    - lines(galton$parent,lm1$fitted,col="red",lwd=3)
+- plot residuals example:
+    - plot(galton$parent,lm1$residuals,col="blue",pch=19)
+    - abline(c(0,0),col="red",lwd=3)
+- get coefficients for fitted line - enter lm1 #variable for fitted line
+- create additional data set using galton data and plot with smoothScatter
+    - newGalton <- data.frame(parent=rep(NA,1e6),child=rep(NA,1e6))
+    - newGalton$parent <- rnorm(1e6,mean=mean(galton$parent),sd=sd(galton$parent))
+    - newGalton$child <- lm1$coeff[1] + lm1$coeff[2]*newGalton$parent + rnorm(1e6,sd=sd(lm1$residuals))
+    - smoothScatter(newGalton$parent,newGalton$child)
+    - abline(lm1,col="red",lwd=3)
+- convert to t-distribution
+    - (value-mean)/S.E.  #centers the distribution to zero and standardizes the variance
+- confidence intervals
+    - summary(sampleLm4)$coeff #displays intercept, slope, standard error, t-value and pvalue
+    - confint(sampleLm4, level=0.05)  # displays confidence interval
+- p- values -  less than... 0.05 significant, 0.01 strongly significant, .001 very significant    
+- scatter plot with factors using jitter
+    - plot(movies$score ~ jitter(as.numeric(movies$rating)),col="blue",xaxt="n",pch=19)
+    - axis(side=1,at=unique(as.numeric(movies$rating)),labels=unique(movies$rating))
+    - meanRatings <- tapply(movies$score,movies$rating,mean)
+    - points(1:4,meanRatings,col="red",pch="-",cex=5) #plot means
+    - points(1:4,lm1$coeff[1] + c(0,lm1$coeff[2:4]),col="red",pch="-",cex=5) #use regression coefficients instead of means
+- regression with factors
+    - lm1 <- lm(movies$score ~ as.factor(movies$rating))
+    - lm2 <- lm(movies$score ~ relevel(movies$rating,ref="R")) #relevels so different value is used for intercept (application is for calculating confidence intervals for comparison of factor values)
+    - anova(lm1) #anova for fitted line
+    - aov(movies$score ~ as.factor(movies$rating)) #anova for variables
+    - TukeyHSD(lm1) #calculates regression coefficients for every combination of factors (eliminates need to relevel)
+- split data by factor value and fit lines
+    - lmM <- lm(hunger$Numeric[hunger$Sex=="Male"] ~ hunger$Year[hunger$Sex=="Male"])
+    - lmF <- lm(hunger$Numeric[hunger$Sex=="Female"] ~ hunger$Year[hunger$Sex=="Female"])
+    - plot(hunger$Year,hunger$Numeric,pch=19)
+    - points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex=="Male")*1+1))
+    - lines(hunger$Year[hunger$Sex=="Male"],lmM$fitted,col="black",lwd=3)
+    - lines(hunger$Year[hunger$Sex=="Female"],lmF$fitted,col="red",lwd=3)
+- multivariate regression with same slope #coeff[3] is multiplied by T/F
+    - lmBoth <- lm(hunger$Numeric ~ hunger$Year + hunger$Sex)
+    - plot(hunger$Year,hunger$Numeric,pch=19)
+    - points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex=="Male")*1+1))
+    - abline(c(lmBoth$coeff[1],lmBoth$coeff[2]),col="red",lwd=3)
+    - abline(c(lmBoth$coeff[1] + lmBoth$coeff[3],lmBoth$coeff[2] ),col="black",lwd=3)
+- multivariate regression with different slopes (interactions)
+    - lmBoth <- lm(hunger$Numeric ~ hunger$Year + hunger$Sex + hunger$Sex*hunger$Year) 
+    - plot(hunger$Year,hunger$Numeric,pch=19) 
+    - points(hunger$Year,hunger$Numeric,pch=19,col=((hunger$Sex=="Male")*1+1)) 
+    - abline(c(lmBoth$coeff[1],lmBoth$coeff[2]),col="red",lwd=3)
+    - abline(c(lmBoth$coeff[1] + lmBoth$coeff[3],lmBoth$coeff[2] +lmBoth$coeff[4]),col="black",lwd=3)
+- multivariate regression with continuous variables
+    - be careful with coefficients / easy to confuse
+- regression in real world
+    - confounders
+    - outliers 
+        - do sensitivity analysis with data in/out)
+        - transform data (e.g., log for right skewed data #add 1 to avoid NAs for transformation
+        - robust methods (Robust, rlm)
+    - variance changes
+        - plot the residuals
+        - Box-Cox Transform
+        - variance stabilizing transform
+        - weighted least squares
+        - Huber-white standard errors
+    - variations in units
+        - relative units (e.g., percentage of deaths vs. total deaths which skews toward higher population)
+        - affects model fits, interpretation and inference
+        
+    
+    
+    
+    
+
+     
+
+R for Dummies Notes
+- help("xxxx") or ?xxxx   # help on a topic
+- quit()   # quit application
+- rm(xxx)   # remove variable/vector
+- save(variable_name, file=”file_name.rda”)   # save variable to file in working directory
+- load(“file_name.rda”)   # loads variables in file to current environment
+- cntrl + L (lowercase)   # clear console
+- sum()   # sums values or variables - comma separated
+- loadhistory()   # replaces history of commands from current session with commands from saved session (R uses a file.rhistory to save the history from the previous session)
+- \n   # new line
+- cat()   # print variable and transforms items like line breaks \n to an actual line break instead of the symbol \n
+- #   # use to create comments after the # symbol
+- savehistory(file = “Chapter3.Rhistory”)   # save history of commands
+- cntrl + /   # toggles comments on/off for large group of text that is highlighted
+- install.packages(‘fortunes’)   # installs packages (name needs to be in quotes)
+- library(fortunes)   # load package 
+- detach(package:fortunes)   # unload a package
+- x%%y   # modulus of x/y
+- x%/%y   # x/y rounded down to nearest integer
+- abs(x)   # absolute value
+- log(x,base=y)   # logarithm with base y (if no base is selected, it defaults to natural log)
+- exp(x)   # exponential (e^x)
+- sqrt()   # square root
+- factorial(x)   # factorial
+- choose(x,y)   # number of possible combination when you draw y elements at a time from x possibiities
+- log2() or log10()   # shortcuts for log base 2 and base 10
+- 1.33e4   # 1.33 * 10^4 (works with negative exponents e.g., 1.33e-4)
+- round(123.456,digits=2)   # rounds to number of digits, you can use -digits to round to nearest 10, 100, etc...
+- signif(-123.456,digits=4)   # truncates to significant digits (this value would be -123.5)
+- floor(x)   # rounds down to nearest integer
+- ceiling(x)   # rounds up to nearest integer
+- trunc(x)   # rounds toward zero (positive numbers round down and negative numbers round up
+- inf   # infinity
+- is.finite(x)   # True or False based on whether or not x is finite
+- is.infinite(x)   # True of False based on whether or not x is infinite
+- NaN   # Not a number (e.g., inf/inf)
+- is.NaN(x)   # True of False based on whether or not x is NaN (note:if x=NA it will return false)
+- is.na(x)   # True or False based on whether or not x is not available (na in any calculation will turn it into na, if x is NaN it will return True)
+- str(x)   # returns structure of value e.g., type of vector, number of elements in x, first few values of x (types of vectors are: numeric, integer, character, logic, datetime, factor)
+- is.[vector type](x)   # e.g., is.integer(x), is.character(x), is.logical(x), is.numeric(x) - keep in mind integers are numeric but numeric aren't integer
+- [number]L   # forces R to categorize value as integer (instead of numeric) 32bit instead of 64bit
+- seq(from = 4.5, to = 2.5, by = -0.5)   # creates sequence with specific intervals (compare to 1:6 which creates a sequence with intervals of 1)
+- rep(c(1,2,3), times=3)   # 1,2,3,1,2,3,1,2,3
+- rep(c(1,2,3), each =3)   # 1,1,1,2,2,2,3,3,3
+- rep(c(2,4),times=c(3,2))   # 2,2,2,4,4
+- rep(1:3,length.out=7)   # 1,2,3,1,2,3,1
+- vector_name[c(2,5,7)]   # returns numbers indexed at 2, 5 and 7 from the vector
+- vector_name[-3]   # returns all numbers except item indexed at position 3
+- vector_name[-(1:20)]   # returns all numbers except the first 20 items
+- x==y   # True of False if x=y
+- x != y   # x not equal to y
+- x >= y   # equal sign is always to the right of greater than symbol
+- x & y   # x and y
+- x | y   # x or y
+- ! x   # not x (inverse of True or False)
+- xor(x,y)   # exclusive or (x not equal to y)
+- vector_name > 5   # returns True or False for each element in the vector, True if the element is greater than 5
+- which(vector_name > 5)   # returns only the elements that are greater than 5
+- x[!is.na(x)]   # removes not available values from vector (cleans out missing data)
+- any(x)   # True or False - is any element in vector x True
+- all(x)   # True of False - is every element in vector x True
+- use the argument na.rm=TRUE in the functions all() and any()    # removes NA values - e.g., sum(x,na.rm=TRUE)
+- sum(x)   # Calculates the sum of all values in x (if all are missing, NA you'll get 0 as sum)
+- prod(x)   # Calculates the product of all values in x (if all are NA, you'll get 1 as product)
+- min(x)   # Gives the minimum of all values in x (if all are NA, you'll get inf)
+- max(x)   # Gives the maximum of all values in x (if all are NA, you'll get -inf)
+- cumsum(x)   # Gives the cumulative sum of all values in x
+- cumprod(x)   # Gives the cumulative product of all values in x
+- cummin(x)   # Gives the minimum for all values in x from the start of the vector until the position of that value
+- cummax(x)   # Gives the maximum for all values in x from the start of the vector until the position of that value
+- diff(x)   # Gives for every value the difference between that value and the next value in the vector
+- length(x)   # Number of elements in vector x
+- nchar(x)   # Length of an element
+- letters and LETTERS   # built in data set for alpahbet (either in lowercase or uppercase)
+- head(x, number of elements)   # takes first elements of vector
+- tail(x, number of elements)   # takes last elements of vector
+- islands   # built in data set of 48 largest land masses and their surface areas with names as attribute
+- islands[c("Asia", "Antartica")]   # returns the surface area of the land masses named
+- names(islands)[1:9]   # returns the island names for the first 9 in the data set
+- names(sort(islands, decreasing=TRUE)[1:6])   # returns the names of the six largest land masses
+- month.name   # built in data set with names of months
+- names(month.days) <- month.name   # creates attribute names for vector month.days and uses built in data set to assign names as attribute values
+- names(month.days[month.days==31])   # returns the names of months with 31 days (assumes you create vector called month.days with number of days in each month and assign month names as attribute)
+- strsplit(vector, “ “)   # splits string into separate elements using a space as a delimiter

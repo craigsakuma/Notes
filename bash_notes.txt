@@ -1,0 +1,28 @@
+***BASH NOTES
+
+- ls -l #list with details
+- ls -ltr #list with details in order of last saved
+- ls -a #list with hidden files
+- ls -la #list with details and hidden files
+- cd ../.. (goes up two directories)
+- ./ for current directory
+- cp filename ../../dev (saves file two directs
+- cp -R includes subdirectories and files
+- mv can be used to rename files
+- tab will autocomplete
+- rmdir ??? to remove directory with file names
+
+- make sure you're in desktop/generalassembly/ before running bash login for the AWS node
+
+pip
+- pip freeze #lists all packages installed via pip
+- pip install --upgrade [package name]
+
+homebrew
+- brew update
+- brew upgrade
+- brew doctor
+
+.bash_profile
+- located in /users/Craig_Sakuma/
+- set path.... is used to order paths when searching for files

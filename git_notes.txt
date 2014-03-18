@@ -1,0 +1,24 @@
+Git Notes
+
+- git init  #creates git repository (creates hidden folder /.git/)
+- git status  #provides status of git repository (e.g., initial commits and untracked files)
+- git add <filename>  #adds file to staging area for commit
+- git add '*.txt'  #adds all txt files to staging area
+- git rm --cached <filename>  #removes file from staging area
+- git commit -m "<Notes to describe commit>"  #commits files from staging area to repository
+- git log  #provides log of commits that have been made to repository
+- git remote add <remote name> <url>  #sets up remote repository (e.g., remote name and url is commonly "origin" and "https://github.com/..../") 
+- git push -u <remote name> <branch name>  #pushes changes to remote; -u saves settings as default so you can just type git push in future; remote name is commonly origin and branch name is master
+- git pull <origin> <master>  #pulls any changes other people have made to your local repository
+- git diff HEAD  #determine what is different from your last commit; HEAD is a pointer that refers to your most recent commit
+- git diff --staged  #determine what is different in the staging area
+- git reset <path/filename> #removes specific file from staging area
+
+
+- git --version #returns version of git
+
+
+
+advanced
+- git stash
+- git stash apply

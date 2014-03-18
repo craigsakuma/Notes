@@ -1,0 +1,8 @@
+Mac Shortcuts
+
+Chrome 
+command+0 #resize zoom to default
+command+option+arrow #switch tabs
+
+command+shift+4 #select screen shot for desktop image capture
+

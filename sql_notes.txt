@@ -1,0 +1,86 @@
+SQL Notes
+
+prompt$> sqlite3 [filename.db] < [filename.sql]
+between sqlite3 and filename options:
+    -echo
+    -header
+    -column
+
+control-D to break
+control-C to break
+.quit
+.exit
+
+.header on [turn on the headers for select]
+.mode col [turn on columns]
+.schema [table_name]
+.read [filename.sql] /* runs sql file in 
+
+/* commments.... */
+
+___________
+
+CREATE TABLE person (
+    id INTEGER PRIMARY KEY,
+    first_name TEXT,
+    last_name TEXT,
+    age INTEGER
+);
+
+
+INSERT INTO person (id, first_name, last_name, age)
+     VALUES (0, "Zed", "Shaw", 37);
+     
+SELECT name, age FROM pet WHERE dead = 0;
+
+SELECT count(*) FROM pet;
+
+SELECT DISTINCT category FROM business_categories;  # select distinct values
+
+SELECT category, count(category) from business_categories GROUP BY category; # sum counts by category
+
+SELECT * from business, business_categories WHERE business.id=business_categories.id AND business_categories.category='Pizza' AND business.name LIKE '%Parlor%'; # wildcard search with LIKE and %
+
+SELECT pet.id, pet.name, pet.age, pet.dead
+    FROM pet, person_pet, person
+    WHERE
+    pet.id = person_pet.pet_id AND
+    person_pet.person_id = person.id AND
+    person.first_name = "Zed";
+    
+
+UPDATE person SET first_name = "Hilarious Guy"
+    WHERE first_name = "Zed";
+    
+DROP TABLE IF EXISTS [table_name];
+
+ALTER TABLE person RENAME TO peoples;
+ALTER TABLE peoples ADD COLUMN hatred Integer;
+
+BEGIN; /* marker for commit and rollback commands */
+COMMIT; /* executes steps after begin statement */
+ROLLBACK; /* undo steps after the begin statement */
+BEGIN PREFERRED; /* default mode, but you can use EXCLUSIVE or RESERVED to ensure database tables aren't updated by other users;
+
+
+SAVEPOINT [savepoint_name]; 
+RELEASE SAVEPOINT [svavepoint_name];
+ROLLBACK TO SAVEPOINT [savepoint_name];
+/* similar to begin, but allows you to have multiple points that can be nested */
+
+- Always limit lines of output for join queries or get help from database engineers to avoid shutting down the database
+- Use count instead of select to test size of query
+- Using quotes on conditions terms can drastically improve performance
+- LIMIT = [number of rows] to only return a selection of data (avoids overloading database)
+- SELECT * FROM pet INTO OUTFILE '/tmp/orders.csv'
+
+MySQL Examples
+
+load data infile '[filename]' into table [table name]
+    fields terminated by ","
+    enclosed by "'";
+
+insert into [table name] ([field name 1], [field name 2],......) values ([value 1], [value 2],...);
+
+
+

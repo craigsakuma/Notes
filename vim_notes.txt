@@ -1,0 +1,69 @@
+VIM Notes
+
+- vim [filename] #open file with vim
+- :q!  #quit without saving
+- :wq  #write file and quit
+- :w  #write file
+
+Navigation
+- arrow keys: h j k l #left, down, up, right
+- w  #next word 
+- b  #beginning of word
+- e  #end of word
+- 0  #beginning of line
+- $  #end of a line
+- gg  #beginning of the file
+- G  #end of the file
+- [number]G  #go to nth line in file
+- cntl-b page up
+- cntl-f page down
+- %  #toggle between parentheses
+
+Numbers
+- [number]i[string][esc]  #repeats a string n number of times
+
+Undo
+- u  #undo last command (note: do not use captial u)
+- [control]+r  #redo
+
+
+Find
+- /[string]  #finds next string
+- n  #finds next  string
+- N  #finds previous  string 
+- *  #find next word that is currently under cursor
+- #  #find previous word that is under cursor
+
+Copy, Paste and Delete
+- yy  #copy line
+- dd  #delete line
+- [number]dd  #delete n lines
+- dw  #delete word
+- x  #delete character
+- r  #replace single character without switching to insert mode
+- p  #paste deleted or copied line after cursor
+- P  #paste before cursor
+- o  #insert line below cursor
+- O  #insert line above cursor
+
+Settings
+- :set number #adds row numbers in left margin
+- :set filetype=python #sets syntax setting to python (formatting for python coding)
+- :set syntax on #turns on syntax
+*****Stopped tutorial at deleting*****
+
+
+
+This is a test.
+I'm trying out my vim skills.
+
+go
+
+
+go test
+go
+go
+go
+(test #1)
+((test #2))
+((test)(#3))

@@ -1,0 +1,5 @@
+\q  # quit
+rs_login <user_name> # login
+\dt #describe table
+\d 
+

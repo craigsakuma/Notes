@@ -1,0 +1,353 @@
+******************
+DATA SCIENCE NOTES
+******************
+
+Vivienne Ming, Chief Data Scientist Gild
+- factorization
+- Bayes DB
+- exogenous vs. indogenous
+- internet of things
+    - variety
+    - social value
+- data science will change so stay tied to business in creative role
+    - data science as a service is growing (Marketo)
+    - machine learning engineers with specialization
+- creative problem solving
+- data scientists that have freedom to operate and aren't tied too closely to product cycles
+- data science is part of company's strategy
+
+Crowdflower, Lukas CEO/Founder
+- Outsource data labeling by industry experts
+- Build cannonical data sets
+- Uses html and cml for building questionnaires
+- more advanced mechanical turk
+- 20% test questions is general rule of thumb
+- email lukas@crowdflower for free credits for project
+
+Hunter Whitney
+- Data Visualization/UX expert (15 years)
+- Author of Data Insights
+- Static vs Dynamic, Explain vs Explore, User Control High vs. Low
+- Know your user
+    - Role - novice vs expert
+    - Frequency - daily reference vs one time use
+    - 
+
+
+Exception handling
+    try:
+        [statement]
+    except Exception as e:
+        print e
+    #This will ensure you capture error before processing exception (if you use pass, you'll never know what went wrong)
+
+Bash
+- ls -l #list with details
+- ls -ltr #list with details in order of last saved
+- cd ../.. (goes up two directories)
+- cp filename ../../dev (saves file two directs
+- mv can be used to rename files
+- tab will autocomplete
+- make sure you're in desktop/generalassembly/ before running bash login for the AWS node
+- pip freeze #lists all packages installed via pip
+- cat > [filename] #creates file and opens prompt where you can enter text that will be added inside the new file
+
+Multi-linear Regression
+- composite features (using )
+
+Numpy
+- import numpy as np
+- seed([number]) 
+
+Cleaning Data
+- missing values
+    - impute with mean
+    - impute with zeros
+- scraping data 
+    - use floating IP (via Amazon EC2) to change IP address by spinning up new nodes
+    - add random timeout to scraping so make behavior look more like a user
+    - urllib2 - python tools for scraping
+    - beautiful soup for parsing html text 
+    - random timeout
+        -import random
+            - random.random() #generates random number between 0 and 1
+        -import time
+            - time.sleep([seconds]) #pauses for time seconds
+- ADD COMMA AT END OF EVERY LINE IN JSON FILE:
+perl -pi -e "s/$/,/;" yelp_academic_dataset_review.json
+
+- APIs
+    - api list - http://blog.mashape.com/post/50049459044/list-of-fun-and-interesting-apis-to-try-out
+    - nflgame python package - https://pypi.python.org/pypi/nflgame/
+
+JSON Files
+- http://jsonlint.com/   #this verifies JSON file is valid
+- http://jsonprettyprint.com/  #reformats JSON data to view easier
+- yelp business.json file wasn't valid
+    - missing "[" at beginning and "]" at end of file
+    - missing commas between files (e.g., "}{" should be "},{")
+ 
+
+
+
+
+ROC Curve
+- Binary classifications
+- True Positive Rate = TP/(TP + FN)
+- False Positive Rate = FP /(FP +TN)
+- True Positive Rate vs. False Positive Rate
+- Area under curve is measurement of model validity
+- RMSE - Root Mean Square Error is used for non-binary classification model measurement
+
+Creating Home Environment
+1. Homebrew
+2. Pip (best for python packages)
+3. Virtualenv
+4. Continuum.io -> anaconda 
+5. Create Git Repo
+6. Clone
+7. Sublime 2.0
+
+Moving Files to AWS
+- SCP secure copy
+- SCP -i GA1 <pathtofile> GA1@50...<path>...<filename>
+- SCP -i <sshkey> <pathtofile> <localpath>
+AWS EC2
+- git config to set up user id for git
+
+
+Features
+- Need n squared records for n features when applying machine learning
+
+Cross-Validation
+- 2-3 fold is standard for industry
+- 2 fold example - split data into 3 groups.  train on 1,2 and test on 3; train on 1,3 and test on 2; train on 2,3 and test on 1
+
+Prediction Error Types
+- Training error - there might be two records in the training data that have same features but different classifications
+- Test error (or generalization error)
+- OOS error (out of sample)
+
+KNN Classification
+- frequently overfits
+- supervised classification
+- can become expensive quickly as you add more observations
+- you can divide and conquer using map reduce - e.g., host feature sets in one computer and have calculations executed with another set of processors
+- normalize features and map between 0 and 1 (requires you to know max and min of features)
+- convert categorical variables into binary values 
+- feature selection - remove irrelevant features
+- commercial use - to classify customer types
+- good for classifying categories with complex borders like customers*****
+
+K Means Cluster
+- unsupervised
+- pretty efficient and scalable
+- has hard time dealing with non-convex data or data with widely varing shapes
+- frequently used with PCA to get to two factors so that a visual confirmation of the clusters can be made
+- you can use higher k value to start and then group similar clusters after k-means analysis is complete
+- cohesion measures how well data is similar within a cluster
+- separation measures how well the clusters separate data from one another
+- silhouette coefficient combines both cohesion and separation (SC close to 1 is good, negative is bad)
+- choose k that gives highest SC
+
+Naive Bayes
+- Used for preditcing and classification
+- Most commonly used classifier in academia
+- simple, elegant and lightweight
+- great for text classification*****
+
+Logistic Regression
+- Binary decision 
+- C parameter is used for regularization (0<= C <=1) - higher C = higher regularization
+
+Decision Trees
+- sklearn.tree.DecisionTreeClassifier
+- entropy is amount of data
+- flexible for both categorical and continuous features
+- information gain (increase in purity - leaf with higher percentage of a single class)
+- preventing overfitting
+    - leafs with only one record results in overfitting / minimum number of records for leaf
+    - limiting tree to binary outcomes help prevent overfitting (a.k.a. CART)
+    - splitting criterion that explicitly penalizes numbers of outcomes (C4.5)
+    - gain ratio function (based on information gain)
+    - limit for max depth 
+    - pre-pruning - requiring minimum threshold on gain
+    - perform pruning after the algorithm is complete
+- Uses Hunt's algorithm - which prioritizes nodes to optimize purity (leaf nodes with 100% similar classification)
+
+Random Forest
+- good starting point because you don't have to normalize features
+- becomes expensive quickly
+- n_estimators less than 1,000 to ensure computational resources are available
+- ensemble method
+- extra trees is model similar to random forest but has slightly better performance
+- features don't need to be independent for good performance
+- ensemble of decision trees
+
+Dimensionality Reduction
+- Linear regression - build model, remove feature and see if r^2/pearson coefficient improves
+- Applications of dimensionality reduction
+    - topic models
+    - recommender systers
+    - image recognition / computer vision / speech recognition
+    - astronomy (spectral data analysis)
+- Need n-squared records for n features
+- Feature extraction same as dimensionality reduction
+- PCA vs SVD - try both and see which one works better
+
+
+Principal Component Analysis
+- Assumes relationships are linear (same goes for SVD - Singular Value Decomposition)
+- PCA doesn't handle sparse matrices well
+
+Singular Value Decomposition
+- Useful for recommendation engines
+- Doesn't handle sparse matrices well
+
+Support Vector Machines
+- kernel (algorithm for creating boundaries)
+- good for fitting non-linear boundaries for classifications
+- binary classifier
+- relies on data points closest to the boundary
+- C is parameter for regularization (1/lambda) - smaller C = bigger regularization
+- Convex function so it always finds global minimum (won't have local minimums)
+- finds maximum margin hyperplan between classes
+- black box
+- classification example covered in class but continuous/regression version exists as well
+
+Non-Linear Classification
+- Transform complex data set to a simplified version where a linear boundary can be drawn
+- Can be computationally expensive
+- Be careful using high gamma values for Gaussian kernel (leads to overfitting)
+- Black box so hard to understand workings of algorithms
+
+Multithreading
+- Set up no more than 2 threads per core
+- Improves computing performance
+
+
+Recommendation Engines
+- two methodologies - based on similar users vs. based on similar items
+- content based filtering (user like new items that are similar to items they already like)
+    - hard to make cross-content recommendation systems
+    - need to map each item into a feature space by hand
+    -recommendations are limited in scope
+- collaborative filtering (only interested in the user-item ratings themselves)
+    - sparse matrix 
+    - e.g., 5k users x 18k movies with ratings
+    - two methods 
+    - item-item similarity (also called memory-based CF)
+        - neighborhood methods like item-item don't scale
+    - model-based collaborative filter
+        - uses matrix decomposition techniques
+        - use SVD to identify latent variables
+        - susceptible to fraud
+        - cold start problem - need to have data on user before this algorithm works
+
+
+MODEL SELECTION
+Supervised
+    - Continuous
+        - Linear Regression
+        - Regression Trees
+    - Categorical
+        - KNN
+        - Logistic Regression
+        - Decision Trees
+        - Random Forests
+        - Naive Bayes
+        - Support Vector Machines
+Unsupervised
+    - Continuous
+        - Principle Component Analysis
+        - Singular Value Decomposition 
+    - Categorical
+        - K-means Clustering
+ 
+Hadoop / Map Reduce
+- CommonCrawl.org has best quick start
+- Hive, Hbase and Pig are layers on top of Hadoop for managing map reduce jobs
+- Written in Java
+- Mahout is layer on top for machine learning
+
+Stats
+- Student's t
+- R
+- Chi Sq
+- RMSE
+
+
+Software Products
+- kiji
+- keen.io
+- kibana / elastic search
+
+Use Cases
+- User Research on web sites or software
+- Error log files (e.g., Kibana) 
+
+Visualization
+- Gephi package
+- Matplotlib 
+
+Databases
+- Key-value - memcache, Redis, Riak, Tokyo Cabinet, Voldemort, Amazon SimpleDB, SQL
+- Column-oriented (Bigtable clones) - Cassandra, Hbase, Hadoop
+- Document-oriented - MongoDB, CouchDB, S3
+- Graph - Neo4J, FlockDB, OrientDB, Pregel(Google)
+
+MySQL
+- Always limit lines of output for join queries or get help from database engineers to avoid shutting down the database
+- Use count instead of selecct
+- Using quotes on conditions terms can drastically improve performance
+- LIMIT = [number of rows] to only return a selection of data (avoids overloading database)
+- SELECT * FROM pet INTO OUTFILE '/tmp/orders.csv'
+
+Redis
+- 3,000 time improvement in speed compared to CouchDB
+- very scalable
+- search is limited to key-values
+
+
+CS 229 Projects
+- Detecting Bad Wikipedia Edits
+- Financial market time series prediction with recurrent neural networks
+- Predicting Star Ratings of Movie Review Comments 
+- Review of Probability Theory (detailed math - will be posted on Schoology
+
+Data Sets
+- http://www.transtats.bts.gov/   #transportation
+
+
+Python Tool Kits
+- Monkey Wrench
+- NLTK - Natural Language Tool Kit
+- SciKitLearn
+- Numpy 
+- ArgParse - http://docs.python.org/dev/howto/argparse.html#id1
+- Pandas
+- ggplot
+- urllib, urllib2 or requests #for scraping data
+- cursor package to make sql queries directly from python
+
+TO DO
+- Git/Github tutorial 
+- Review TF-IDF (term frequency - inverse document frequency)
+- Cosine similarity
+- ROC - Receiver Operator Characteristic
+- Finish data analysis lectures
+- Finish machine learning lectures
+****- SPF13 - vim plug-in Research
+
+Questions
+- how to set seed in python?
+- how to use numpy.random.shuffle
+- how to import csv files into python
+- how to append data to database (is there a sql package?)
+
+
+
+
+
+
+

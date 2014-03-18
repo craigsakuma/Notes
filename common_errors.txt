@@ -1,0 +1,29 @@
+COMMON ERRORS
+
+
+#####
+
+Python
+- Switching back slash / with forward slash \
+- Misspelling variables
+- Indenting line of code with single space
+- Leaving open-ended quotes (not closing the quotes at the end of the string)
+- Using d% instead of %d
+- Substituting singular for plural - variable name is 'words' but typed 'word' instead
+- Using tabs instead of 4 spaces for indentation
+- Forget to convert raw_input return value from string to number using int() function
+- Forget to capitalize True and False
+- Forget : at end of if, while, def statements
+
+Numpy
+- Numpy arrays only accept numbers
+
+######
+
+HTML/CSS
+forgetting to add ; at end of line
+substituting = for :
+
+######
+Notes
+cp -r target destination (-r copies directory with files and children)

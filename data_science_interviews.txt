@@ -1,0 +1,17 @@
+DATA SCIENCE INTERVIEWS
+
+CS
+- Linked lists
+- n-squared
+- Algorithms class on Coursera (they do the class in Java)
+
+Stats
+- questions about fundamentals
+
+
+Data Analysis Case Studies
+- 
+- Exploratory analysis
+
+
+

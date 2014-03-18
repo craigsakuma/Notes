@@ -1,0 +1,22 @@
+Regular Expressions
+- use ^ to limit search to only beginnings of lines (e.g., ^Title)
+- use $ to limit search to only ends of a line (e.g. morning$)
+- character classes [Bb][Us][Ss][Hh] will search for any combination of upper or lower case versions of Bush
+- [0-9] [a-zA-Z] will work for ranges
+- ^ in a character class[^] for example[^.?]$ will look
+- . works as a wild card for search (nothing is an expression so 9.11 would match to 911 and 9a11
+- | can be used for OR # ^[Gg]ood|[Bb]ad is different than ^([Gg]ood|[Bb]ad)
+- ? means it's optional e.g., [Gg]eorge( [Ww]\.)? [Bb]ush
+- use \ before a meta-character if you want to literally mean it e.g, \. would return "."
+- * repeated characters and includes nothing as a character so (.*) would match anything an
+- + means it can be repeated but must contain at least one
+- {} are used as interval quantifiers [Bb]ush( +[^ ]+ +{1,5} debate #bush with 1-5 words followed by debate
+- {1} exact match of once, {2,4} two to four, {4,} at least 4 times
+- \1 repeat of last item in parentheses # +([a-zA-Z]+) +\1 + any word repeated
+- the * is greedy so it always matches the longest possible string that satisfies the regular expression
+- ^s(.*?)s$ #? is used to make * not greedy
+
+JSON Example
+- change last } per line to },
+- use regex \"\}$ 
+- need \ before each symbol
