@@ -31,7 +31,6 @@ Hunter Whitney
 - Know your user
     - Role - novice vs expert
     - Frequency - daily reference vs one time use
-    - 
 
 
 Exception handling

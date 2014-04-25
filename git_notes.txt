@@ -18,6 +18,33 @@ Git Notes
 - git --version #returns version of git
 
 
+- git clone <path to repository>
+
+- git branch <branch name> #create branch
+- git fetch origin #gets branches from origin
+- git checkout <branch name> #checks out branch from repository so you can work on that branch
+
+
+Advice from Dave
+		I just wanted to keep you up to date on a few things. first, you should be sure to merge master into your branch every so often. It looks like you are back a little bit in history.
+
+		To do this
+		go to the command line in our repo. commit your latest changes
+		type
+
+		git checkout master
+		git pull origin master
+		git checkout <yourbranch>
+		git merge master
+
+		then resolve any conflicts. 
+		(you might also be able to do this with "git pull origin master", not sure though)
+
+		That way as we make changes, you can keep all of your services and so on up to date!
+
+
+
+
 
 advanced
 - git stash

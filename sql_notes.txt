@@ -28,6 +28,8 @@ CREATE TABLE person (
 );
 
 
+CREATE TABLE test as (SELECT * from hourly_summary_by_sensor LIMIT 1000);
+
 INSERT INTO person (id, first_name, last_name, age)
      VALUES (0, "Zed", "Shaw", 37);
      

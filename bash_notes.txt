@@ -6,8 +6,8 @@
 - ls -la #list with details and hidden files
 - cd ../.. (goes up two directories)
 - ./ for current directory
-- cp filename ../../dev (saves file two directs
-- cp -R includes subdirectories and files
+- cp filename ../../dev (saves file in dev folder that's two directories below current directory
+- cp -r <target> <destination> copies directory and includes subdirectories and files
 - mv can be used to rename files
 - tab will autocomplete
 - rmdir ??? to remove directory with file names
@@ -16,7 +16,8 @@
 
 pip
 - pip freeze #lists all packages installed via pip
-- pip install --upgrade [package name]
+- pip install --upgrade [package name] #upgrades existing package
+- check version of pip (i.e., might be pip2 install)
 
 homebrew
 - brew update

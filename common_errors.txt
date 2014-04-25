@@ -2,7 +2,6 @@ COMMON ERRORS
 
 
 #####
-
 Python
 - Switching back slash / with forward slash \
 - Misspelling variables
@@ -17,13 +16,16 @@ Python
 
 Numpy
 - Numpy arrays only accept numbers
+- Use single column 2D array instead of 1D array (use .ravel() to convert to 1D)
 
 ######
+SQL
+- forget commas between fields in SELECT statements
+- forget AND between conditions in WHERE clauses
+- reset kernel when running SQL from ipython notebook
 
+######
 HTML/CSS
-forgetting to add ; at end of line
-substituting = for :
+- forgetting to add ; at end of line
+- substituting = for :
 
-######
-Notes
-cp -r target destination (-r copies directory with files and children)
