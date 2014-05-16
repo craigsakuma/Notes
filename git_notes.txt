@@ -43,9 +43,13 @@ Advice from Dave
 		That way as we make changes, you can keep all of your services and so on up to date!
 
 
+Stashing
+- git stash (stash current changes)
+- git stash list (list stashes)
+- git stash apply (load most current stash{0})
+- git stash apply stash@{2} (load specific stash)
+- git stash pop  (pop current stash{0})
+- git stash drop stash@{0} (drop a specific stash)
+- git stash branch (convert stash into a branch)
 
 
-
-advanced
-- git stash
-- git stash apply
