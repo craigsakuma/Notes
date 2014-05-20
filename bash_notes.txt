@@ -27,3 +27,20 @@ homebrew
 .bash_profile
 - located in /users/Craig_Sakuma/
 - set path.... is used to order paths when searching for files
+
+copy files instead of SCP
+- rsync -avP feste.json ec2:  #copy feste.json from local drive to ec2 (requires )
+check path
+- echo $PYTHONPATH
+
+setting up ssh
+- config file in .ssh folder to set ssh shortcuts so you can just type 'ssh ec2' to log in
+"""
+Host ec2
+    HostName ec2-23-22-209-93.compute-1.amazonaws.com
+    User dsack 
+
+Host spark
+    HostName ec2-54-242-6-62.compute-1.amazonaws.com
+    User root
+"""
