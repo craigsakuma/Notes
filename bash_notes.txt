@@ -44,3 +44,8 @@ Host spark
     HostName ec2-54-242-6-62.compute-1.amazonaws.com
     User root
 """
+
+s3cmd
+- command line tool for s3
+- allows you to check s3 while in ec2
+- example: s3cmd ls  
