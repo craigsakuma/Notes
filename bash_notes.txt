@@ -49,3 +49,4 @@ s3cmd
 - command line tool for s3
 - allows you to check s3 while in ec2
 - example: s3cmd ls  
+- example: s3cmd put [filename] s3://test-euclid-dstrauss/  # takes file on ec2 and moves it to s3 in the test-euclid-dstrauss bucket
