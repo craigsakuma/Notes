@@ -2,5 +2,5 @@ PYTHON NOTES
 
 - tuples are immutable and ordered
 - lists are mutable and unordered
-
+- sets are unordered lists with no repeated values
 
