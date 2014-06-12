@@ -1,0 +1,23 @@
+NLTK Notes
+
+
+- Process
+    - Select corpus
+        - use stemming to clean corpus
+        - remove stop words (NLTK has library)
+    - Select terms
+    - Calculate TF-IDF for each term
+        - might need to add 1 to IDF to avoid dividing by zero
+
+    - Use cosine similarity to measure similarity
+- Limit cosine similarity to 300 words (becomes computationally expensive when >300)
+- Beautiful Soup
+    - Text extraction from html (even broken html)
+- Stemming in NLTK isn't very good
+- NLTK.clean_html() - cleans up html markers
+- urllib2 for capturing html
+- diffbot
+
+
+- Mining the Social Web
+- Dr. Matt

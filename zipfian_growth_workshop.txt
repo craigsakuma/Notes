@@ -1,0 +1,16 @@
+Zipfian Growth Workshop
+- chartio - data visualization company
+- mixpanel, kissmetrics, rjmetrics - good cohort analysis tools
+
+- AA (acquire, activate) - less important for growth
+- RRR (retain, refer, revenue) - more important for growth
+- cohort analysis most commonly by month (sometimes by week)
+- subcohort analysis by ad/acquisition channel
+- deduplication - billing address good technique (liftopia - single digit 8%)
+
+- github zipfian/growth-workshop and growth-workshop2
+
+- Bayes Theorem: P(H|E)=P(H)P(E|H)/P(E)
+- if you got a vanilla cookie what is prob it came from bowl 1
+- bowl 1 30V:10C, bowl 1 20V:20C
+- =(.5)(.75)/(.625)
