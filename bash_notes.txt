@@ -8,6 +8,7 @@
 - ./ for current directory
 - cp filename ../../dev (saves file in dev folder that's two directories below current directory
 - cp -r <target> <destination> copies directory and includes subdirectories and files
+- pbcopy < [filename] # command to copy file to clipboard
 - mv can be used to rename files
 - tab will autocomplete
 - rmdir ??? to remove directory with file names
@@ -34,7 +35,7 @@ check path
 - echo $PYTHONPATH
 
 setting up ssh
-- config file in .ssh folder to set ssh shortcuts so you can just type 'ssh ec2' to log in
+- config* file in .ssh folder to set ssh shortcuts so you can just type 'ssh ec2' to log in
 """
 Host ec2
     HostName ec2-23-22-209-93.compute-1.amazonaws.com
@@ -44,9 +45,21 @@ Host spark
     HostName ec2-54-242-6-62.compute-1.amazonaws.com
     User root
 """
+- add github ssh key in .ssh folder and follow instructions at github (register key, change url)
 
-s3cmd
+
+Tool for S3 - s3cmd
 - command line tool for s3
 - allows you to check s3 while in ec2
 - example: s3cmd ls  
 - example: s3cmd put [filename] s3://test-euclid-dstrauss/  # takes file on ec2 and moves it to s3 in the test-euclid-dstrauss bucket
+
+
+SCREEN COMMAND
+- screen # creates remote screen that will continue to run (avoids broken connections)
+- cntrl-a, d # leave screen without closing session
+- screen -r # re-opens session
+- use exit to close screen
+- link for more info - https://kb.iu.edu/data/acuy.html
+
+
