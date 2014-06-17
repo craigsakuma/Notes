@@ -3,4 +3,16 @@ PYTHON NOTES
 - tuples are immutable and ordered
 - lists are mutable and unordered
 
+- videos
+    - David Beazley - metaprogramming (YouTube)
+    - Alex Martelli - advanced python (PyCon video)
+    - Python libraries - read and get familiar with the documents
+    - Advanced Python - Thomas Weuthers (google)
+- books
+    3 Python Cookbook
+    1 Python Essential Reference
+    2 Python in a Nutshell
+    - Treading on Python - vol 1
+    - Two Scoops of Django
+    - Pro-Django (for understanding the guts of Django - advanced)
 
