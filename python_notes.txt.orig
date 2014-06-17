@@ -2,7 +2,7 @@ PYTHON NOTES
 
 - tuples are immutable and ordered
 - lists are mutable and unordered
-- sets are unordered lists with no repeated values
+<<<<<<< HEAD
 
 - videos
     - David Beazley - metaprogramming (YouTube)
@@ -16,4 +16,7 @@ PYTHON NOTES
     - Treading on Python - vol 1
     - Two Scoops of Django
     - Pro-Django (for understanding the guts of Django - advanced)
+=======
+- sets are unordered lists with no repeated values
+>>>>>>> aaa15eff3a6640e1ceb440a4eccccdccfcd2d010
 

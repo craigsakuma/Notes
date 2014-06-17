@@ -23,6 +23,7 @@ Git Notes
 - git branch <branch name> #create branch
 - git fetch origin #gets branches from origin
 - git checkout <branch name> #checks out branch from repository so you can work on that branch
+- git checkout -b <branch name> #creates and checks out branch at same time
 
 
 Advice from Dave
@@ -51,5 +52,12 @@ Stashing
 - git stash pop  (pop current stash{0})
 - git stash drop stash@{0} (drop a specific stash)
 - git stash branch (convert stash into a branch)
+
+
+Setup
+- ssh keys - https://help.github.com/articles/generating-ssh-keys
+- changing remote url (from https to ssh) https://help.github.com/articles/changing-a-remote-s-url
+- multiple ssh keys - https://gist.github.com/jexchan/2351996
+- ssh forwarding (to EC2) https://help.github.com/articles/using-ssh-agent-forwarding
 
 
