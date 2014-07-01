@@ -84,5 +84,7 @@ load data infile '[filename]' into table [table name]
 
 insert into [table name] ([field name 1], [field name 2],......) values ([value 1], [value 2],...);
 
-
+REDSHIFT
+- rs_active_queries <username like mminar> # find active queries
+- rs_exec -c "cancel <queryID#>"
 

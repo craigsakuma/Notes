@@ -1,0 +1,4 @@
+Diagnostics
+- (get URL for spark cluster) ec2-50-17-179-8.compute-1.amazonaws.com
+- [URL]:8080
+- [URL]::5080/ganglia

@@ -30,7 +30,10 @@ homebrew
 - set path.... is used to order paths when searching for files
 
 copy files instead of SCP
-- rsync -avP feste.json ec2:  #copy feste.json from local drive to ec2 (requires )
+- rsync -avP feste.json ec2:  #copy feste.json from local drive to ec2 (requires set up of ec2 in .ssh config file)
+- rsync -avP [target file path] [userid]@[awsnode]:[file path]
+- rsync -avP .ssh/awsSec.sec dsack@ec2-23-22-209-93.compute-1.amazonaws.com:.ssh/
+
 check path
 - echo $PYTHONPATH
 
