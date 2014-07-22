@@ -20,11 +20,15 @@ Git Notes
 
 - git clone <path to repository>
 
+BRANCHING
 - git branch <branch name> #create branch
 - git fetch origin #gets branches from origin
 - git checkout <branch name> #checks out branch from repository so you can work on that branch
 - git checkout -b <branch name> #creates and checks out branch at same time
 
+TRACKING CHANGES
+- git log -p -2 #lists commit log (p option shows changes) (-# is how many commits to display)
+- git diff HEAD #difference between what is staged for commit and what was last committed
 
 Advice from Dave
 		I just wanted to keep you up to date on a few things. first, you should be sure to merge master into your branch every so often. It looks like you are back a little bit in history.
