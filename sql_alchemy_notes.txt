@@ -1,0 +1,12 @@
+SQL Alchemy Notes
+
+- engine = create_engine("<dialect+driver://username:password@host:port/database>") # create connection
+
+
+
+Postgres SQL Notes
+- postgres -D /usr/local/var/postgres # launch postgres server
+- createdb <database name> # create database
+- psql <database name> # open sql terminal for database
+- \q # quit
+- select * from pg_settings where name = 'port'; # get ports

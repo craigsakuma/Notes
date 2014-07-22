@@ -17,3 +17,17 @@ PYTHON NOTES
     - Two Scoops of Django
     - Pro-Django (for understanding the guts of Django - advanced)
 
+
+Anaconda - Environments
+# create new environment
+conda create -p ~/anaconda/envs/test numpy=1.6 anaconda
+
+# set up path for new environment
+export PATH=~/anaconda/envs/test/bin/:$PATH
+
+# To activate this environment, use:
+source activate /Users/Craig_Sakuma/anaconda/envs/test
+
+# To deactivate this environment, use:
+source deactivate
+
