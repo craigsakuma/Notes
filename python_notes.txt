@@ -17,6 +17,26 @@ PYTHON NOTES
     - Two Scoops of Django
     - Pro-Django (for understanding the guts of Django - advanced)
 
+- Pandas
+    - describe().T # Transpose
+    - merge
+
+- Packages
+    - mplD3  # Takes matplotlib objects and converts them into D3
+    - StatsModels #Python package to checkout
+    - Seaborn # Package for statistical plotting that sits on top of Matplotlib (like ggplot)
+    - scipy # Good for optimization
+    - emcee # Package for log distributions
+    - scikitimage # On top of 
+
+- Tools
+    - Plotly
+    - Bokeh
+    - Glue  # Explore data in interactive way
+    - Blaze - for semi-structured data
+    - kimonolabs - scraping structured data from websites
+    - forms.blockspring.com
+
 
 Anaconda - Environments
 # create new environment
