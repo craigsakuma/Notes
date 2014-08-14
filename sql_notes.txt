@@ -76,6 +76,8 @@ ROLLBACK TO SAVEPOINT [savepoint_name];
 - LIMIT = [number of rows] to only return a selection of data (avoids overloading database)
 - SELECT * FROM pet INTO OUTFILE '/tmp/orders.csv'
 
+
+
 MySQL Examples
 
 load data infile '[filename]' into table [table name]
@@ -83,6 +85,8 @@ load data infile '[filename]' into table [table name]
     enclosed by "'";
 
 insert into [table name] ([field name 1], [field name 2],......) values ([value 1], [value 2],...);
+
+
 
 REDSHIFT
 - rs_active_queries <username like mminar> # find active queries

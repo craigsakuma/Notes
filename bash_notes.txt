@@ -13,6 +13,10 @@
 - tab will autocomplete
 - rmdir ??? to remove directory with file names
 
+shortcut keys
+- 
+
+
 chmod ### <file>
 0 == --- == no access
 1 == --x == execute
@@ -57,6 +61,7 @@ Host spark
     HostName ec2-54-242-6-62.compute-1.amazonaws.com
     User root
 """
+- chmod so that key is only read for user
 - add github ssh key in .ssh folder and follow instructions at github (register key, change url)
 
 

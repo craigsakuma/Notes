@@ -409,6 +409,17 @@ Regular Expressions in R
     dates <- sapply(m, function(x) x[2])
     dates <- as.Date(dates, "%B %d, %Y")
 
+
+Practical Data Science in R
+- 
+
+
+
+
+
+
+
+
 Object Oriented Programming in R
 - setClass() #creates classes
 - new() creates objects 
