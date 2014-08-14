@@ -1,8 +1,20 @@
 PYTHON NOTES
 
-- tuples are immutable and ordered
-- lists are mutable and unordered
-- sets are unordered lists with no repeated values
+DEBUGGER
+- import pdb
+- pdb.set_trace()  # insert into code to start debugging
+- n # next step
+- q # quit
+- p <variable(s)> # print 
+- c # continue
+- l # list (shows code where the debugger is at)
+- s # step into subroutine
+- r # return (continue in subroutine until return)
+- b # break point (sets break point where it will stop if you continue)
+- w # where (prints out a stack trace - when in subroutine)
+- u  or d # up or down (moves up/down stack trace)
+- if you want to run python commands start with ! at pdb prompt
+- enter at blank prompt repeats last command
 
 - videos
     - David Beazley - metaprogramming (YouTube)

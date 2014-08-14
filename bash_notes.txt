@@ -36,13 +36,15 @@ homebrew
 - brew update
 - brew upgrade
 - brew doctor
+- brew list
+- files are stored in usr/local/Cellar
 
 .bash_profile
 - located in /users/Craig_Sakuma/
 - set path.... is used to order paths when searching for files
 
 copy files instead of SCP
-- rsync -avP feste.json ec2:  #copy feste.json from local drive to ec2 (requires set up of ec2 in .ssh config file)
+- rsync -avP feste.json ec2:  #copy feste.json from local drive to ec2 (requires set up of ec2 in .ssh config file - DONT forget :)
 - rsync -avP [target file path] [userid]@[awsnode]:[file path]
 - rsync -avP .ssh/awsSec.sec dsack@ec2-23-22-209-93.compute-1.amazonaws.com:.ssh/
 
@@ -71,6 +73,7 @@ Tool for S3 - s3cmd
 - example: s3cmd ls  
 - example: s3cmd put [filename] s3://test-euclid-dstrauss/  # takes file on ec2 and moves it to s3 in the test-euclid-dstrauss bucket
 - s3cmd del -r s3://BUCKET/OBJECT # delete file from bucket recursive
+- s3cmd get s3://BUCKET/OBJECT LOCAL_FILE # Get file from bucket
 
 
 SCREEN COMMAND
