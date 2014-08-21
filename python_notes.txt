@@ -2,7 +2,7 @@ PYTHON NOTES
 
 DEBUGGER
 - import pdb
-- pdb.set_trace()  # insert into code to start debugging
+- w  # insert into code to start debugging
 - n # next step
 - q # quit
 - p <variable(s)> # print 
@@ -16,6 +16,7 @@ DEBUGGER
 - if you want to run python commands start with ! at pdb prompt
 - enter at blank prompt repeats last command
 
+REFERENCES
 - videos
     - David Beazley - metaprogramming (YouTube)
     - Alex Martelli - advanced python (PyCon video)
@@ -29,10 +30,10 @@ DEBUGGER
     - Two Scoops of Django
     - Pro-Django (for understanding the guts of Django - advanced)
 
+TOOLS/RESOURCES
 - Pandas
     - describe().T # Transpose
     - merge
-
 - Packages
     - mplD3  # Takes matplotlib objects and converts them into D3
     - StatsModels #Python package to checkout
@@ -40,7 +41,6 @@ DEBUGGER
     - scipy # Good for optimization
     - emcee # Package for log distributions
     - scikitimage # On top of 
-
 - Tools
     - Plotly
     - Bokeh
@@ -49,7 +49,7 @@ DEBUGGER
     - kimonolabs - scraping structured data from websites
     - forms.blockspring.com
 
-
+ENVIRONMENTS
 Anaconda - Environments
 # create new environment
 conda create -p ~/anaconda/envs/test numpy=1.6 anaconda

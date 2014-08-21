@@ -11,7 +11,7 @@
 - pbcopy < [filename] # command to copy file to clipboard
 - mv can be used to rename files
 - tab will autocomplete
-- rmdir ??? to remove directory with file names
+- clear line at terminal prompt cntrl-u
 
 chmod ### <file>
 0 == --- == no access
@@ -78,4 +78,33 @@ SCREEN COMMAND
 - use exit to close screen
 - link for more info - https://kb.iu.edu/data/acuy.html
 
+
+Data Science at the Command Line
+by Jeroen Janssens
+
+Links / References
+- http://datasciencetoolbox.org/
+- http://datascienceatthecommandline.com/
+- Thinking with Data by Max Shron
+
+Data Science is OSEMN
+- Obtain, Scrub, Explore, Model, iNterpret data
+
+Record commmand line sessions
+- https://asciinema.org
+
+Commands
+- curl -sL '<url with api request>' # get data from url
+- parallel # like multithreading
+- 'yada yada yada{0}' :::{2009..2011} # iterate with values
+- seq <int> # create sequence
+- seq 100 | grep 3 # finds all numbers with a 3 in seq 100
+- seq 10 > <directory>/<filename> # output to file
+- csvlook  <path/file> | less -S # view csv file
+- sqk2csv --db 'sqlite:///data/iris.db' --query 'SELECT * FROM iris WHERE sepal_length > 7.5' # query to csv
+- sqk2csv --db 'sqlite:///data/iris.db' --query 'SELECT * FROM iris WHERE sepal_length > 7.5' | csvlook # view output in pretty format
+- curl -s http://www.gutenberg.org/cache/epub/76/pg76.txt | tr '[:upper:]' '[:lower:]' | grep -oE '\w+' | sort | uniq -c | sort -nr | head -n 10   # get top 10 words 
+
+- shebang "#!/usr/bin/env bash" # makes file executable in designated language
+- remove curl statement and the file will take input 
 

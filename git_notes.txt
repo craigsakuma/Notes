@@ -1,24 +1,25 @@
 Git Notes
 
+START GIT
 - git init  #creates git repository (creates hidden folder /.git/)
+- git --version #returns version of git
+- git clone <path to repository>
+- ssh keys - https://help.github.com/articles/generating-ssh-keys
+- changing remote url (from https to ssh) https://help.github.com/articles/changing-a-remote-s-url
+- multiple ssh keys - https://gist.github.com/jexchan/2351996
+- ssh forwarding (to EC2) https://help.github.com/articles/using-ssh-agent-forwarding
+
+BASICS
 - git status  #provides status of git repository (e.g., initial commits and untracked files)
 - git add <filename>  #adds file to staging area for commit
 - git add '*.txt'  #adds all txt files to staging area
 - git rm --cached <filename>  #removes file from staging area
 - git commit -m "<Notes to describe commit>"  #commits files from staging area to repository
-- git log  #provides log of commits that have been made to repository
 - git remote add <remote name> <url>  #sets up remote repository (e.g., remote name and url is commonly "origin" and "https://github.com/..../") 
 - git push -u <remote name> <branch name>  #pushes changes to remote; -u saves settings as default so you can just type git push in future; remote name is commonly origin and branch name is master
 - git pull <origin> <master>  #pulls any changes other people have made to your local repository
-- git diff HEAD  #determine what is different from your last commit; HEAD is a pointer that refers to your most recent commit
-- git diff --staged  #determine what is different in the staging area
 - git reset <path/filename> #removes specific file from staging area
 
-
-- git --version #returns version of git
-
-
-- git clone <path to repository>
 
 BRANCHING
 - git branch <branch name> #create branch
@@ -26,9 +27,27 @@ BRANCHING
 - git checkout <branch name> #checks out branch from repository so you can work on that branch
 - git checkout -b <branch name> #creates and checks out branch at same time
 
+
 TRACKING CHANGES
+- git diff HEAD  #determine what is different from your last commit; HEAD is a pointer that refers to your most recent commit
+- git diff --staged  #determine what is different in the staging area
+- git log  #provides log of commits that have been made to repository
 - git log -p -2 #lists commit log (p option shows changes) (-# is how many commits to display)
 - git diff HEAD #difference between what is staged for commit and what was last committed
+
+
+STASHING
+- git stash (stash current changes)
+- git stash list (list stashes)
+- git stash apply (load most current stash{0})
+- git stash apply stash@{2} (load specific stash)
+- git stash pop  (pop current stash{0})
+- git stash drop stash@{0} (drop a specific stash)
+- git stash branch (convert stash into a branch)
+
+
+
+
 
 Advice from Dave
 		I just wanted to keep you up to date on a few things. first, you should be sure to merge master into your branch every so often. It looks like you are back a little bit in history.
@@ -46,22 +65,3 @@ Advice from Dave
 		(you might also be able to do this with "git pull origin master", not sure though)
 
 		That way as we make changes, you can keep all of your services and so on up to date!
-
-
-Stashing
-- git stash (stash current changes)
-- git stash list (list stashes)
-- git stash apply (load most current stash{0})
-- git stash apply stash@{2} (load specific stash)
-- git stash pop  (pop current stash{0})
-- git stash drop stash@{0} (drop a specific stash)
-- git stash branch (convert stash into a branch)
-
-
-Setup
-- ssh keys - https://help.github.com/articles/generating-ssh-keys
-- changing remote url (from https to ssh) https://help.github.com/articles/changing-a-remote-s-url
-- multiple ssh keys - https://gist.github.com/jexchan/2351996
-- ssh forwarding (to EC2) https://help.github.com/articles/using-ssh-agent-forwarding
-
-
