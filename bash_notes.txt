@@ -14,8 +14,12 @@
 - clear line at terminal prompt cntrl-u
 
 shortcut keys
-- 
+- cntrl-u #clears text from terminal line
 
+
+
+Find File
+- find <path> -name "<filename>"
 
 chmod ### <file>
 0 == --- == no access
@@ -31,6 +35,7 @@ pip
 - pip freeze #lists all packages installed via pip
 - pip install --upgrade [package name] #upgrades existing package
 - check version of pip (i.e., might be pip2 install)
+- pip install MySQL_python==1.2.2 #install specific version
 
 homebrew
 - brew update
