@@ -1,0 +1,10 @@
+Scala Notes
+
+- commenting 
+    - // for single line
+    - /* .....multiline.....*/ 
+    - best practice is /** with an aligned * to start each subsequent line
+
+- val = # declare value which is immutable
+- val <name>:<type> = <initialization value.
+- var = # declare variable which is mutable

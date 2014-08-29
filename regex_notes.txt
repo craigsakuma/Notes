@@ -16,7 +16,8 @@ Regular Expressions
 - the * is greedy so it always matches the longest possible string that satisfies the regular expression
 - ^s(.*?)s$ #? is used to make * not greedy
 
-JSON Example
-- change last } per line to },
-- use regex \"\}$ 
-- need \ before each symbol
+
+
+
+
+
